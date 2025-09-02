@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather/models/weather_models.dart';
@@ -38,39 +41,48 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        onPressed: () {
-          Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-        },
-        child: (Provider.of<ThemeProvider>(context, listen: false).isDarkMode)
-            ? Icon(Icons.light_mode, size: 30)
-            : Icon(Icons.dark_mode, size: 30),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 110),
-            Text(
-              _weather?.cityName ?? 'City 🤔',
-              style: TextStyle(fontSize: 50),
+    return (_featchWeather() == null)
+        ? CupertinoActivityIndicator()
+        : Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              onPressed: () {
+                Provider.of<ThemeProvider>(
+                  context,
+                  listen: false,
+                ).toggleTheme();
+              },
+              child:
+                  (Provider.of<ThemeProvider>(
+                    context,
+                    listen: false,
+                  ).isDarkMode)
+                  ? Icon(Icons.light_mode, size: 30)
+                  : Icon(Icons.dark_mode, size: 30),
             ),
-            SizedBox(height: 110),
-            (_weather!.temperature.round() <= 20)
-                ? Lottie.asset('assets/sun.json')
-                : Lottie.asset('assets/cloud.json'),
-            SizedBox(height: 110),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 110),
+                  Text(
+                    _weather?.cityName ?? 'City 🤔',
+                    style: TextStyle(fontSize: 50),
+                  ),
+                  SizedBox(height: 110),
+                  (_weather!.temperature.round() <= 20)
+                      ? Lottie.asset('assets/sun.json')
+                      : Lottie.asset('assets/cloud.json'),
+                  SizedBox(height: 110),
 
-            Text(
-              '${_weather?.temperature.round()} °C',
-              style: TextStyle(fontSize: 50),
+                  Text(
+                    '${_weather?.temperature.round()} °C',
+                    style: TextStyle(fontSize: 50),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

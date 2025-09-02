@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -5,6 +7,7 @@ import 'package:weather/models/weather_models.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherService {
+  // ignore: constant_identifier_names
   static const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
   final String apiKey;
 
@@ -32,6 +35,7 @@ class WeatherService {
     }
     // FEATCH THE CURRENT LOCATION
     Position position = await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     );
 
