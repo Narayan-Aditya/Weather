@@ -42,7 +42,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   @override
   Widget build(BuildContext context) {
     return (_featchWeather() == null)
-        ? CupertinoActivityIndicator()
+        ? Center(child: CupertinoActivityIndicator())
         : Scaffold(
             backgroundColor: Theme.of(context).colorScheme.primary,
             floatingActionButton: FloatingActionButton(
